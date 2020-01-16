@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 from selenium.webdriver.common.by import By
-from parameterized import parameterized, parameterized_class
+from parameterized import parameterized
 
 
 class HomePageTests(unittest.TestCase):
@@ -12,10 +12,14 @@ class HomePageTests(unittest.TestCase):
         cls.driver = webdriver.Firefox()
         cls.driver.implicitly_wait(30)
         cls.driver.maximize_window()
-        cls.driver.get("http://demo.magentocommerce.com/")
+        cls.driver.get("https://magento.com/")
 
     def test_search_field(self):
         self.assertTrue(self.is_element_present(By.CLASS_NAME, 'fa-search'))
+
+    def test_eCommerce_platforms_image(self):
+        ecommerce_image = self.driver.find_element_by_xpath("//img[@alt='eCommerce Platforms']")
+        self.assertTrue(ecommerce_image.is_displayed())
 
     @parameterized.expand([
         ("demo_button", "Get A Free Demo"),
@@ -26,7 +30,6 @@ class HomePageTests(unittest.TestCase):
         ("resources_navigation", "Resources"),
         # ("blog_navigation", "Blog"),
     ])
-
     def test_page_links(self, name, link_text):
         self.assertTrue(self.is_element_present(By.LINK_TEXT, link_text.upper()))
 
