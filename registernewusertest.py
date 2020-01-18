@@ -30,11 +30,20 @@ class RegisterNewUser(unittest.TestCase):
         email_address = self.driver.find_element_by_xpath("//input[@id='email_address']")
         email_address.send_keys('Sarah.Connor@gmail.com')
 
-        select_element = Select(self.driver.find_element_by_id("country"))
-        for option in select_element.options:
+        select_country = Select(self.driver.find_element_by_id("country"))
+        for option in select_country.options:
             print(option.text)
 
-        select_element.select_by_visible_text("United States")
+        select_country.select_by_visible_text("United States")
+
+        select_company = Select(self.driver.find_element_by_id("customer_company_type"))
+        select_company.select_by_index(1)
+
+        select_role = Select(self.driver.find_element_by_id("customer_individual_role"))
+        self.assertEqual(3, len(select_role.options))
+
+        select_role.select_by_index(2)
+
 
 
     @classmethod
